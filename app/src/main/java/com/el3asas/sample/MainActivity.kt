@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val button = findViewById<Button>(R.id.btn)
+
         button.setOnClickListener {
             /*
             * ensure that override of resources
