@@ -12,6 +12,11 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.btn)
         button.setOnClickListener {
+            /*
+            * ensure that override of resources
+            * primaryColor defined in library is blue
+            * primaryColor defined in app is red
+            * */
             customSnackBar(it, "", com.el3asas.utils.R.drawable.ic_outline_error_outline_24) {}
         }
 
