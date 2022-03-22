@@ -9,7 +9,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 //        createNotificationChannel("fff","dddd",application)
         val button = findViewById<Button>(R.id.btn)
         button.setOnClickListener {
