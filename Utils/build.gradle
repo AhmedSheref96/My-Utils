@@ -29,7 +29,7 @@ publishing {
 
     repositories {
         maven {
-            name = "GitHubPackages"
+            name = "MyPackages"
             url = uri("https://maven.pkg.github.com/ahmedsheef/My-Utils")
 
             credentials {
