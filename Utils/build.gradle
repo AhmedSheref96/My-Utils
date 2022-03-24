@@ -9,37 +9,39 @@ plugins {
 
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
 def getVersionName = { ->
-    return "1.0.2"
+    return "1.0.0"
 }
 
-def getArtificatId = { ->
+def getArtifactId = { ->
     return "Utils"
 }
 
 publishing {
     publications {
         bar(MavenPublication) {
-            groupId 'com.el3asas.libraries' // Replace with group ID
-            artifactId getArtificatId()
+            groupId 'com.el3asas.Utils'
+            artifactId getArtifactId()
             version getVersionName()
-            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+            artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
         }
     }
 
     repositories {
         maven {
             name = "MyPackages"
-            url = uri("https://maven.pkg.github.com/ahmedsheef/My-Utils")
+            url = uri("https://maven.pkg.github.com/${githubProperties['gpr.usr']}/My-Utils")
 
             credentials {
                 username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
+
+            version = 1.0
         }
     }
 }
-
 
 android {
     compileSdk 32
