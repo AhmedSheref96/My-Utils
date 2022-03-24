@@ -18,30 +18,45 @@ def getArtifactId = { ->
     return "Utils"
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            bar(MavenPublication) {
-                groupId 'com.el3asas.Utils'
-                artifactId getArtifactId()
-                version getVersionName()
-                artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
-            }
+/*//after
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.el3asas.Utils'
+            artifactId getArtifactId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
         }
+    }
 
-        repositories {
-            maven {
-                name = "MyPackages"
-                url = uri("https://maven.pkg.github.com/${githubProperties['gpr.usr']}/My-Utils")
+    repositories {
+        maven {
+            name = "MyPackages"
+            url = uri("https://maven.pkg.github.com/${githubProperties['gpr.usr']}/My-Utils")
 
-                credentials {
-                    username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                    password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-                }
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
     }
 }
+*/
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.El3asas'
+                artifactId = getArtifactId()
+                version = getVersionName()
+            }
+        }
+    }
+}
+
 
 android {
     compileSdk 32
