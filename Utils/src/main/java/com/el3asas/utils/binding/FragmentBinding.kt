@@ -21,4 +21,5 @@ open class FragmentBinding : Fragment() {
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
+
 }
