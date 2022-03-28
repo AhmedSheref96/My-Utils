@@ -1,103 +1,62 @@
 package com.el3asas.utils.utils
 
 import android.annotation.SuppressLint
-import android.content.Context
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val TIME_FORMAT_12_H = "hh:MM a"
-const val TIME_FORMAT_24_H = "HH:MM"
+class Formatter {
 
-const val DATE_FORMAT_WITH_TIME = "yyyy-MM-DD hh:mm:ss"
+    fun timeToStringg(date: Date, format: String, lang: String): String =
+        date.timeToString(format, lang)
 
-const val DATE_FORMAT_WITHOUT_TIME = "yyyy-MM-DD"
-const val NOTIFICATION_DATE_FORMAT_en = "dd/M/yyyy   hh:mm:ss a"
-const val NOTIFICATION_DATE_FORMAT_ar = "hh:mm:ss a   yyyy:M:d"
+    fun toDatee(time: String, format: String, lang: String) = time.toDate(format, lang)
 
-const val DATE_FORMAT_SALARY_REPORT = "yyyy-d"
+    fun changeFormatt(
+        time: String,
+        fromFormat: String,
+        toFormat: String,
+        lang: String = Locale.ENGLISH.language
+    ) = time.changeFormat(fromFormat, toFormat, lang)
 
-class Formatter(context: Context? = null) {
-    private val pref by lazy { context?.applicationContext?.getSharedPreferences("appSetting", 0) }
+    fun diffBetweenTwoTimess(time1: Calendar, time2: Calendar): Long =
+        diffBetweenTwoTimes(time1, time2)
 
-    @SuppressLint("SimpleDateFormat")
-    fun formatTime(time: String): String {
-        return time.formatTime()
-    }
+    fun formatTimee(
+        calendar: Calendar,
+        timeFormat: String,
+        lang: String = Locale.ENGLISH.language
+    ) = calendar.formatTime(timeFormat, lang)
 
-    @SuppressLint("SimpleDateFormat")
-    fun getDateOnly(str: String): String {
-        val stringFormatter12 = SimpleDateFormat(DATE_FORMAT_WITHOUT_TIME, Locale.ENGLISH)
-        val stringFormatter24 = SimpleDateFormat(DATE_FORMAT_WITH_TIME, Locale.ENGLISH)
-        val date: Date? = stringFormatter24.parse(str)
-        return stringFormatter12.format(date!!)
-    }
+    fun getTimerr(time: Long): String = time.getTimer()
 
-    fun Date.formatNotificationTime(): String =
-        this.formatTimeNoti(
-            pref?.getString("lang", Locale.getDefault().language) ?: Locale.getDefault().language
-        )
-
-}
-
-fun Calendar.formatSalaryMonthYear(locale: Locale) =
-    SimpleDateFormat(DATE_FORMAT_SALARY_REPORT, locale).format(this.time)
-
-@SuppressLint("SimpleDateFormat")
-fun String.getDateOnly(): String {
-    val stringFormatter12 = SimpleDateFormat(DATE_FORMAT_WITHOUT_TIME, Locale.ENGLISH)
-    val stringFormatter24 = SimpleDateFormat(DATE_FORMAT_WITH_TIME, Locale.ENGLISH)
-    val date: Date? = stringFormatter24.parse(this)
-    return stringFormatter12.format(date!!)
-}
-
-fun formatTime(calendar: Calendar, timeFormat: String): String {
-    val formatter = SimpleDateFormat(timeFormat, Locale.ENGLISH)
-    return formatter.format(calendar.time)
-}
-
-fun formatTime(timeInMills: Long, timeFormat: String): String {
-    val calendar=Calendar.getInstance()
-    calendar.time.time=timeInMills
-    val formatter = SimpleDateFormat(timeFormat, Locale.ENGLISH)
-    return formatter.format(calendar.time)
 }
 
 @SuppressLint("SimpleDateFormat")
-fun String.formatTime(): String {
-    val stringFormatter12 = SimpleDateFormat(TIME_FORMAT_12_H)
-    val stringFormatter24 = SimpleDateFormat(TIME_FORMAT_24_H)
-    val date: Date? = stringFormatter24.parse(this)
-    return stringFormatter12.format(date!!)
+fun String.changeFormat(
+    fromFormat: String,
+    toFormat: String,
+    lang: String = Locale.ENGLISH.language
+): String {
+    val to = SimpleDateFormat(toFormat, Locale(lang))
+    val from = SimpleDateFormat(fromFormat, Locale(lang))
+    val date: Date? = from.parse(this)
+    return date?.let { to.format(it) } ?: "Time Not Format"
 }
 
-fun Date.formatTimeNoti(lang: String): String =
-    if (lang == "ar")
-        SimpleDateFormat(NOTIFICATION_DATE_FORMAT_ar, Locale(lang)).format(this)
-    else
-        SimpleDateFormat(NOTIFICATION_DATE_FORMAT_en, Locale(lang)).format(this)
-
-/***
- *take start and get defference time
- */
-@SuppressLint("SimpleDateFormat")
-fun String.differenceBetweenCurrAndMyTime(): Long {
-    val current = Calendar.getInstance()
-    val myTime = this.getTime()
-
-    Timber.d("--------------- ${myTime.time}  ------- ${current.time}")
-
-    return if (current.before(myTime))
-        myTime.timeInMillis - current.timeInMillis
-    else
-        current.timeInMillis - myTime.timeInMillis
+fun Calendar.formatTime(timeFormat: String, lang: String = Locale.ENGLISH.language): String {
+    val formatter = SimpleDateFormat(timeFormat, Locale(lang))
+    return formatter.format(this.time)
 }
 
+fun Date.timeToString(format: String, lang: String): String =
+    SimpleDateFormat(format, Locale(lang)).format(this)
 
-fun diffBetweenTwoTimes(t1: String, t2: String): Long {
-    val time1 = t1.getTime()
-    val time2 = t2.getTime()
+fun String.toDate(format: String, lang: String = Locale.ENGLISH.language): Date {
+    val formatter = SimpleDateFormat(format, Locale(lang))
+    return formatter.parse(this) ?: Date()
+}
 
+fun diffBetweenTwoTimes(time1: Calendar, time2: Calendar): Long {
     return if (time1.before(time2))
         time2.timeInMillis - time1.timeInMillis
     else
@@ -105,31 +64,12 @@ fun diffBetweenTwoTimes(t1: String, t2: String): Long {
 }
 
 /**
- * get value of inc or dec for timer
- */
-@SuppressLint("SimpleDateFormat")
-fun String.incDecTime(): Long {
-    val current = Calendar.getInstance()
-    val start = Calendar.getInstance()
-
-    val stringFormatter24 = SimpleDateFormat(TIME_FORMAT_24_H)
-    val date: Date = stringFormatter24.parse(this)!!
-
-    start.time = date
-    start.set(Calendar.DATE, current.get(Calendar.DATE))
-    start.set(Calendar.YEAR, current.get(Calendar.YEAR))
-    start.set(Calendar.MONTH, current.get(Calendar.MONTH))
-
-    return if (current.before(start))
-        -1000L
-    else
-        1000L
-}
-
-fun timeDownToStr(difference: Long): String {
-    val hours = (difference / (1000 * 60 * 60)).toInt()
-    val min = (difference - 1000 * 60 * 60 * hours).toInt() / (1000 * 60)
-    val second = (difference - (1000 * 60 * 60 * hours + min * 60 * 1000)).toInt() / 1000
+ * get timer string from long 01:00:00
+ * */
+fun Long.getTimer(): String {
+    val hours = (this / (1000 * 60 * 60)).toInt()
+    val min = (this - 1000 * 60 * 60 * hours).toInt() / (1000 * 60)
+    val second = (this - (1000 * 60 * 60 * hours + min * 60 * 1000)).toInt() / 1000
     return String.format(
         Locale.ENGLISH,
         "%02d : %02d : %02d",
@@ -137,22 +77,4 @@ fun timeDownToStr(difference: Long): String {
         if (min > 0) min else -min,
         second
     )
-}
-
-@SuppressLint("SimpleDateFormat")
-fun String.getTime(): Calendar {
-    val calendar = Calendar.getInstance()
-    val current = Calendar.getInstance()
-
-    val stringFormatter24 = SimpleDateFormat(TIME_FORMAT_24_H)
-    val date: Date = stringFormatter24.parse(this)!!
-
-    calendar.time = date
-    calendar.set(Calendar.DATE, current.get(Calendar.DATE))
-    calendar.set(Calendar.YEAR, current.get(Calendar.YEAR))
-    calendar.set(Calendar.MONTH, current.get(Calendar.MONTH))
-
-    Timber.d("------------ ${calendar.time}")
-
-    return calendar
 }

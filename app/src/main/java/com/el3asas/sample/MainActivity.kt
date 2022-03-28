@@ -1,8 +1,10 @@
 package com.el3asas.sample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.el3asas.utils.utils.Formatter
 import com.el3asas.utils.utils.customSnackBar
 
 class MainActivity : AppCompatActivity() {
