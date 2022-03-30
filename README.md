@@ -19,9 +19,12 @@ implement the important fields in your resources with the same name to provide y
 useful library
 
 
-image picker   ->   com.github.dhaval2404
+image picker                         ->   com.github.dhaval2404
 
-pin view       ->   com.chaos.view
+pin view                             ->   com.chaos.view
+
+recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swipedecorator
+
 
 
 
