@@ -1,4 +1,4 @@
-package com.el3asas.utils
+package com.el3asas.utils.utils
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 const val CENTER_CROP = 0
 const val CENTER_FIT = 1
 const val CENTER_INSIDE = 2
-
 
 @BindingAdapter("app:bindImgCenterCrop", "app:placeHolder")
 fun bindImgCenterCrop(v: ImageView, url: String, drawable: Drawable) {
