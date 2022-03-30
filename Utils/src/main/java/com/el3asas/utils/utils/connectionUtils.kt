@@ -29,7 +29,6 @@ fun isConnected(context: Context): Boolean {
                     ConnectivityManager.TYPE_ETHERNET -> true
                     else -> false
                 }
-
             }
         }
     }
