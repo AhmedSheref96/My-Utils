@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
             * primaryColor defined in app is red
             * */
             customSnackBar(it, "", com.el3asas.utils.R.drawable.ic_outline_error_outline_24) {}
-
         }
 
     }
