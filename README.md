@@ -10,7 +10,6 @@ implement the important fields in your resources with the same name to provide y
 
 4 - (color) grey padge icon color
 
-5 - 
 
 
 
