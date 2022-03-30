@@ -6,11 +6,10 @@ implement the important fields in your resources with the same name to provide y
 
 2 - default_notification_channel_id  (string resource)
 
-3 - ic_badge 
+3 - (view id) ic_badge 
 
 4 - (color) grey padge icon color
 
-5 - 
 
 
 
@@ -20,9 +19,12 @@ implement the important fields in your resources with the same name to provide y
 useful library
 
 
-image picker   ->   com.github.dhaval2404
+image picker                         ->   com.github.dhaval2404
 
-pin view       ->   com.chaos.view
+pin view                             ->   com.chaos.view
+
+recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swipedecorator
+
 
 
 
