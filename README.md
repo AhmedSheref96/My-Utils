@@ -6,7 +6,7 @@ implement the important fields in your resources with the same name to provide y
 
 2 - default_notification_channel_id  (string resource)
 
-3 - ic_badge 
+3 - (view id) ic_badge 
 
 4 - (color) grey padge icon color
 
