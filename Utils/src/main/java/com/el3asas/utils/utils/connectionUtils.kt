@@ -1,11 +1,10 @@
-@file:Suppress("DEPRECATION")
-
 package com.el3asas.utils.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+
 
 fun isConnected(context: Context): Boolean {
     var result = false
