@@ -27,5 +27,19 @@ recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swiped
 
 
 
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+  
+  
+  	dependencies {
+	        implementation 'com.github.AhmedSheref96:My-Utils:1.0.3'
+	}
+
+
+
 
 
