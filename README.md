@@ -25,6 +25,8 @@ pin view                             ->   com.chaos.view
 
 recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swipedecorator
 
+easy permission                      ->   https://github.com/googlesamples/easypermissions
+
 
 
 	allprojects {
