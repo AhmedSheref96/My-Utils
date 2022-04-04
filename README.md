@@ -27,6 +27,8 @@ implement the important fields in your resources with the same name to provide y
 
 [easy permission](https://github.com/googlesamples/easypermissions)
 
+[Glide](https://github.com/bumptech/glide)
+
 
 ### import My-Utils
 ```Kotlin
