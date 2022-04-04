@@ -16,7 +16,7 @@ implement the important fields in your resources with the same name to provide y
 
 
 
-useful library
+## useful library
 
 
 image picker                         ->   com.github.dhaval2404
@@ -28,6 +28,7 @@ recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swiped
 easy permission                      ->   https://github.com/googlesamples/easypermissions
 
 
+```Kotlin
 
 	allprojects {
 		repositories {
