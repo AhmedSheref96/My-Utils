@@ -1,9 +1,9 @@
 package com.el3asas.utils.utils
 
-inline fun <T> safeCall(action: () -> Result<T>): Result<T> {
+inline fun <T> safeCall(action: () -> Response<T>): Response<T> {
     return try {
         action()
     } catch(e: Exception) {
-        Result.Error(e.message ?: "An unknown error occurred")
+        Response.Error(e.message ?: "An unknown error occurred")
     }
 }
