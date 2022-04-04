@@ -19,13 +19,13 @@ implement the important fields in your resources with the same name to provide y
 ## important library
 
 
-image picker                         ->   com.github.dhaval2404
+[image picker](https://github.com/Dhaval2404/ImagePicker)
 
-pin view                             ->   com.chaos.view
+[pin view](https://github.com/ChaosLeung/PinView)
 
-recyclerItemDecoration               ->   it.xabaras.android.recyclerview.swipedecorator
+[recyclerItemDecoration](https://github.com/xabaras/RecyclerViewSwipeDecorator)
 
-easy permission                      ->   https://github.com/googlesamples/easypermissions
+[easy permission](https://github.com/googlesamples/easypermissions)
 
 
 ### import My-Utils
