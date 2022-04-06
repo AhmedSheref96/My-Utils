@@ -1,6 +1,6 @@
 package com.el3asas.utils.utils
 
-inline fun <T> safeCall(action: () -> Response<T>): Response<T> {
+fun <T> safeCall(action: () -> Response<T>): Response<T> {
     return try {
         action()
     } catch(e: Exception) {
