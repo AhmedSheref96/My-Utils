@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 
 
-fun isConnected(context: Context): Boolean {
+fun isConnected(context: Context, onConnected: ((type: Int) -> Unit)? = null): Boolean {
     var result = false
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -24,9 +24,18 @@ fun isConnected(context: Context): Boolean {
         connectivityManager.run {
             connectivityManager.activeNetworkInfo?.run {
                 result = when (type) {
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
+                    ConnectivityManager.TYPE_WIFI -> {
+                        onConnected?.let { it(ConnectivityManager.TYPE_WIFI) }
+                        true
+                    }
+                    ConnectivityManager.TYPE_MOBILE -> {
+                        onConnected?.let { it(ConnectivityManager.TYPE_MOBILE) }
+                        true
+                    }
+                    ConnectivityManager.TYPE_ETHERNET -> {
+                        onConnected?.let { it(ConnectivityManager.TYPE_ETHERNET) }
+                        true
+                    }
                     else -> false
                 }
             }
