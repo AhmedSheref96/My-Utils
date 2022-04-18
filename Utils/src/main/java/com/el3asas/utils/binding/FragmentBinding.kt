@@ -5,14 +5,16 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
-abstract class FragmentBinding<T : ViewDataBinding> : Fragment() {
-    abstract val bindingInflater: (LayoutInflater) -> T
-    private var _binding: T? = null
-    protected val binding: T get() = _binding!!
+abstract class FragmentBinding<out T : ViewBinding> : Fragment() {
+    abstract val bindingInflater: (LayoutInflater) -> ViewBinding
+    private var _binding: ViewBinding? = null
 
+    @Suppress("UNCHECKED_CAST")
+    protected val binding: T
+        get() = _binding as T
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,5 +30,4 @@ abstract class FragmentBinding<T : ViewDataBinding> : Fragment() {
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
-
 }

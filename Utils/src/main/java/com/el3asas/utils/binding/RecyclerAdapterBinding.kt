@@ -5,16 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 abstract class RecyclerAdapterBinding<R : ViewDataBinding>(
     private val itemClickListener: ItemClickListener? = null
 ) : RecyclerView.Adapter<RecyclerAdapterBinding.MainViewHolder<R>>() {
-    abstract val bindingInflater: (LayoutInflater) -> R
+    abstract val bindingInflater: (LayoutInflater) -> ViewBinding
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder<R> {
         return MainViewHolder(
             itemClickListener,
-            bindingInflater(LayoutInflater.from(parent.context))
+            bindingInflater(LayoutInflater.from(parent.context)) as R
         )
     }
 

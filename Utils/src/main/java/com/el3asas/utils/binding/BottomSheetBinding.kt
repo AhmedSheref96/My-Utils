@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BottomSheetBinding<T : ViewDataBinding> : BottomSheetDialogFragment() {
-    abstract val bindingInflater: (LayoutInflater) -> T
-    private var _binding: T? = null
-    protected val binding: T get() = _binding!!
+abstract class BottomSheetBinding<out T : ViewBinding> : BottomSheetDialogFragment() {
+    abstract val bindingInflater: (LayoutInflater) -> ViewBinding
+    private var _binding: ViewBinding? = null
+
+    @Suppress("UNCHECKED_CAST")
+    protected val binding: T
+        get() = _binding as T
 
     override fun onCreateView(
         inflater: LayoutInflater,

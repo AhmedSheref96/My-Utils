@@ -5,13 +5,16 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.viewbinding.ViewBinding
 
-abstract class DialogFragmentBinding<T : ViewDataBinding> : DialogFragment() {
-    abstract val bindingInflater: (LayoutInflater) -> T
-    private var _binding: T? = null
-    protected val binding: T get() = _binding!!
+abstract class DialogFragmentBinding<out T : ViewBinding> : DialogFragment() {
+    abstract val bindingInflater: (LayoutInflater) -> ViewBinding
+    private var _binding: ViewBinding? = null
+
+    @Suppress("UNCHECKED_CAST")
+    protected val binding: T
+        get() = _binding as T
 
     override fun onCreateView(
         inflater: LayoutInflater,
