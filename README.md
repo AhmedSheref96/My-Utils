@@ -42,7 +42,7 @@ implement the important fields in your resources with the same name to provide y
   
   
   	dependencies {
-	        implementation 'com.github.AhmedSheref96:My-Utils:1.0.3'
+	        implementation 'com.github.AhmedSheref96:My-Utils:1.0.5'
 	}
 
 
