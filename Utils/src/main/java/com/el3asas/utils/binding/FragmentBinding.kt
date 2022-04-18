@@ -3,18 +3,24 @@ package com.el3asas.utils.binding
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-open class FragmentBinding : Fragment() {
+abstract class FragmentBinding<T : ViewDataBinding> : Fragment() {
+    abstract val bindingInflater: (LayoutInflater) -> T
+    private var _binding: T? = null
+    protected val binding: T get() = _binding!!
 
-    protected inline fun <reified T : ViewDataBinding> binding(
+    override fun onCreateView(
         inflater: LayoutInflater,
-        layout: Int,
-        container: ViewGroup?
-    ): T = DataBindingUtil.inflate(inflater, layout, container, false)
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = bindingInflater(layoutInflater)
+        return binding.root
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

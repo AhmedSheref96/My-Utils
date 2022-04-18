@@ -3,24 +3,18 @@ package com.el3asas.utils.binding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerAdapterBinding<R : ViewDataBinding>(
-    private val itemClickListener: ItemClickListener? = null,
-    private val layout: Int
+    private val itemClickListener: ItemClickListener? = null
 ) : RecyclerView.Adapter<RecyclerAdapterBinding.MainViewHolder<R>>() {
+    abstract val bindingInflater: (LayoutInflater) -> R
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder<R> {
         return MainViewHolder(
             itemClickListener,
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                layout,
-                parent,
-                false
-            )
+            bindingInflater(LayoutInflater.from(parent.context))
         )
     }
 

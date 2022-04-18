@@ -3,7 +3,6 @@ package com.el3asas.utils.binding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -14,6 +13,7 @@ abstract class RecyclerPagedDataAdapterBinding<R : ViewDataBinding, T : Any>(
     private val layout: Int,
     repoComparator: DiffUtil.ItemCallback<T>
 ) : PagingDataAdapter<T, RecyclerPagedDataAdapterBinding.MainViewHolder<R>>(repoComparator) {
+    abstract val bindingInflater: (LayoutInflater) -> R
 
     open class MainViewHolder<R : ViewDataBinding>(
         private val itemClickListener: ItemClickListener?,
@@ -29,12 +29,7 @@ abstract class RecyclerPagedDataAdapterBinding<R : ViewDataBinding, T : Any>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder<R> {
         return MainViewHolder(
             itemClickListener,
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                layout,
-                parent,
-                false
-            )
+            bindingInflater(LayoutInflater.from(parent.context))
         )
     }
 

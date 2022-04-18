@@ -1,24 +1,30 @@
 package com.el3asas.utils.binding
 
-import android.app.Dialog
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 
-open class DialogFragmentBinding : DialogFragment() {
-    protected inline fun <reified T : ViewDataBinding> binding(
-        inflater: LayoutInflater,
-        layout: Int,
-        container: ViewGroup?
-    ): T = DataBindingUtil.inflate(inflater, layout, container, false)
+abstract class DialogFragmentBinding<T : ViewDataBinding> : DialogFragment() {
+    abstract val bindingInflater: (LayoutInflater) -> T
+    private var _binding: T? = null
+    protected val binding: T get() = _binding!!
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-       // dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        return dialog
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = bindingInflater(layoutInflater)
+        return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
     }
 }
