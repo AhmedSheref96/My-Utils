@@ -55,7 +55,6 @@ class CirclePagerIndicatorDecoration(activeColor: Int, inActiveColor: Int) : Ite
     ) {
         super.onDrawOver(c, parent, state)
         val itemCount = parent.adapter!!.itemCount
-
         // center horizontally, calculate width and subtract half from center
         val totalLength = mIndicatorItemLength * itemCount
         val paddingBetweenItems =
