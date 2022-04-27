@@ -2,18 +2,18 @@ package com.el3asas.utils.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.view.View
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.internal.ContextUtils
 import java.util.*
 
 @SuppressLint("RestrictedApi")
-fun loadActivity(v: View, cls: Class<*>) {
-    val intent = Intent(v.context, cls)
-    startActivity(v.context, intent, null)
-    val act = ContextUtils.getActivity(v.context)
+fun loadActivity(context: Context, cls: Class<*>) {
+    val intent = Intent(context, cls)
+    startActivity(context, intent, null)
+    val act = ContextUtils.getActivity(context)
     act?.finish()
 }
 

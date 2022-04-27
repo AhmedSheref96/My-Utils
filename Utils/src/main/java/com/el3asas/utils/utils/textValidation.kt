@@ -1,6 +1,10 @@
 package com.el3asas.utils.utils
 
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.chaos.view.PinView
+import com.el3asas.utils.R
 import com.google.android.material.textfield.TextInputEditText
 import java.util.regex.Pattern
 
@@ -12,10 +16,6 @@ fun showErrorEditText(editText: TextInputEditText, errorId: Int) {
 fun showErrorEditText(editText: PinView, errorId: Int) {
     editText.requestFocus()
     editText.error = editText.context.getString(errorId)
-}
-
-fun isInputEmpty(input: String): Boolean {
-    return input.isEmpty()
 }
 
 fun isNotEqual(password: String, confirmPassword: String): Boolean {
@@ -41,4 +41,18 @@ fun isPasswordValid(password: String): Boolean {
 
 fun isPhoneValid(phone: String): Boolean {
     return android.util.Patterns.PHONE.matcher(phone).matches()
+}
+
+fun shake(v: View) {
+    val shake: Animation = AnimationUtils.loadAnimation(v.context, R.anim.shake)
+    v.startAnimation(shake)
+}
+
+fun isInputEmpty(input: String?): Boolean {
+    return input == null || input.trim().isEmpty()
+}
+
+fun isPhoneValid(phone: String, length: Int, startKey: String): Boolean {
+    return android.util.Patterns.PHONE.matcher(phone)
+        .matches() && phone.length == length && phone.startsWith(startKey)
 }

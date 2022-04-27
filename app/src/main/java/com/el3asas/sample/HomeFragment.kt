@@ -14,4 +14,5 @@ class HomeFragment(override val bindingInflater: (LayoutInflater) -> ViewBinding
         super.onViewCreated(view, savedInstanceState)
         binding.title
     }
+
 }
