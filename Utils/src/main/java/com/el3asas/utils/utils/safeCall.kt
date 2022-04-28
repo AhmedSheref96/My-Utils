@@ -1,6 +1,6 @@
 package com.el3asas.utils.utils
 
-fun <T> safeCall(action: () -> Response<T>): Response<T> {
+suspend fun <T> safeCall(action: () -> Response<T>): Response<T> {
     return try {
         action()
     } catch(e: Exception) {
