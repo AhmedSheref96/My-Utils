@@ -29,6 +29,8 @@ implement the important fields in your resources with the same name to provide y
 
 [Glide](https://github.com/bumptech/glide)
 
+[Circle Image](https://github.com/hdodenhof/CircleImageView)
+
 
 ### import My-Utils
 ```Kotlin
