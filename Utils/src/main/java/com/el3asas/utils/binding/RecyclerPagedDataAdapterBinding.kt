@@ -11,7 +11,6 @@ import androidx.viewbinding.ViewBinding
 
 abstract class RecyclerPagedDataAdapterBinding<R : ViewDataBinding, T : Any>(
     private val itemClickListener: ItemClickListener? = null,
-    private val layout: Int,
     repoComparator: DiffUtil.ItemCallback<T>
 ) : PagingDataAdapter<T, RecyclerPagedDataAdapterBinding.MainViewHolder<R>>(repoComparator) {
     abstract val bindingInflater: (LayoutInflater) -> ViewBinding
