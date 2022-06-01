@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 open class BaseViewModel : ViewModel() {
     val isLoading = MutableStateFlow(true)
-    fun onBack(v: View) {
+    open fun onBack(v: View) {
         clearNavigateStack(v, null)
     }
 }
