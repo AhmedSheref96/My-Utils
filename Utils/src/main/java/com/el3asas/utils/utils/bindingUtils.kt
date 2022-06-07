@@ -33,7 +33,7 @@ fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
     }
 }
 
-fun bindImgWithPlaceHolder(v: ImageView, url: String, drawable: Drawable, position: Int) {
+fun bindImgWithPlaceHolder(v: ImageView, url: String, drawable: Drawable? = null, position: Int) {
     try {
         val glide = Glide.with(v.context)
             .load(url)
