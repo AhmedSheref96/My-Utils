@@ -58,7 +58,7 @@ fun bindImgWithPlaceHolder(
                     if (onSuccessLoading != null) {
                         onSuccessLoading(false)
                     }
-                    return true
+                    return false
                 }
 
                 override fun onResourceReady(
@@ -71,7 +71,7 @@ fun bindImgWithPlaceHolder(
                     if (onSuccessLoading != null) {
                         onSuccessLoading(true)
                     }
-                    return true
+                    return false
                 }
             })
         when (position) {
