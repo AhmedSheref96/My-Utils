@@ -42,7 +42,7 @@ fun bindImgWithPlaceHolder(
     url: String,
     drawable: Drawable? = null,
     position: Int? = null,
-    onSuccessLoading: ((Boolean) -> Unit)?=null
+    onSuccessLoading: ((Boolean, Drawable?) -> Unit)? = null
 ) {
     try {
         val glide = Glide.with(v.context)
@@ -56,7 +56,7 @@ fun bindImgWithPlaceHolder(
                     isFirstResource: Boolean
                 ): Boolean {
                     if (onSuccessLoading != null) {
-                        onSuccessLoading(false)
+                        onSuccessLoading(false, null)
                     }
                     return false
                 }
@@ -69,7 +69,7 @@ fun bindImgWithPlaceHolder(
                     isFirstResource: Boolean
                 ): Boolean {
                     if (onSuccessLoading != null) {
-                        onSuccessLoading(true)
+                        onSuccessLoading(true, resource)
                     }
                     return false
                 }
