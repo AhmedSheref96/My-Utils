@@ -31,6 +31,7 @@ fun <T> getData(
     onError: ((String) -> Unit)? = null,
     isLoading: MutableStateFlow<Boolean>? = null
 ) {
+    isLoading?.value = true
     when (value) {
         is Response.Success -> {
             isLoading?.value = false
