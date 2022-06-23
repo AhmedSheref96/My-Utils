@@ -16,14 +16,18 @@ import kotlin.math.max
  * @param activeColor define active circle color as String
  * @param inActiveColor define inactive circle color as Int
  */
-class CirclePagerIndicatorDecoration(activeColor: Int, inActiveColor: Int) : ItemDecoration() {
+class CirclePagerIndicatorDecoration(
+    activeColor: Int,
+    inActiveColor: Int,
+    itemMarginFromRecyclerView: Int = (DP * 16).toInt()
+) : ItemDecoration() {
     private val colorActive = activeColor
     private val colorInactive = inActiveColor
 
     /**
      * Height of the space the indicator takes up at the bottom of the view.
      */
-    private val mIndicatorHeight = (DP * 16).toInt()
+    private val mIndicatorHeight = itemMarginFromRecyclerView
 
     /**
      * Indicator stroke width.
