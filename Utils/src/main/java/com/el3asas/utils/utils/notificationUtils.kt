@@ -22,7 +22,8 @@ fun NotificationManager.sendNotification(
     avatar: String?,
     contentIntent: Intent,
     @DrawableRes smallIcon: Int = R.drawable.ic_launcher,
-    applicationContext: Context
+    applicationContext: Context,
+    isClosable: Boolean = true
 ) {
 
     val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -56,7 +57,7 @@ fun NotificationManager.sendNotification(
         .setLargeIcon(eggImage)
         .setPriority(NotificationCompat.PRIORITY_MAX)
 
-    builder.setOngoing(true)
+    builder.setOngoing(isClosable.not())
 
     notify(Random().nextInt(), builder.build())
 }
