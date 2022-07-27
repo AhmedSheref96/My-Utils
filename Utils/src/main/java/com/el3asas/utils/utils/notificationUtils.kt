@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import com.el3asas.utils.R
 import java.util.*
@@ -20,6 +21,7 @@ fun NotificationManager.sendNotification(
     content: String,
     avatar: String?,
     contentIntent: Intent,
+    @DrawableRes smallIcon: Int = R.drawable.ic_launcher,
     applicationContext: Context
 ) {
 
@@ -45,7 +47,7 @@ fun NotificationManager.sendNotification(
         applicationContext,
         applicationContext.getString(R.string.default_notification_channel_id)
     )
-        .setSmallIcon(R.drawable.ic_launcher)
+        .setSmallIcon(smallIcon)
         .setContentTitle(title)
         .setContentText(content)
         .setContentIntent(contentPendingIntent)
