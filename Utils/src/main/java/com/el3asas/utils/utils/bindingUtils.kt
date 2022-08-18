@@ -45,9 +45,14 @@ fun bindImgWithPlaceHolder(
     onSuccessLoading: ((Boolean, Drawable?) -> Unit)? = null
 ) {
     try {
+        Glide.with(v.context)
+            .asGif()
+            .load(drawable)
+            .fitCenter()
+            .into(v)
+
         val glide = Glide.with(v.context)
             .load(url)
-            .placeholder(drawable)
             .addListener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -73,6 +78,7 @@ fun bindImgWithPlaceHolder(
                     }
                     return false
                 }
+
             })
         when (position) {
             CENTER_CROP -> glide.centerCrop().into(v)

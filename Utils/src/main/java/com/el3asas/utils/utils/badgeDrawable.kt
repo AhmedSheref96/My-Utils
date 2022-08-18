@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import androidx.core.content.ContextCompat
 import com.el3asas.utils.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlin.math.max
 
@@ -95,6 +96,22 @@ class BadgeDrawable(context: Context) : Drawable() {
 }
 
 fun setBadgeCount(context: Context, icon: LayerDrawable, count: String, navView: NavigationView) {
+    // Reuse drawable if possible
+    val reuse: Drawable? = icon.findDrawableByLayerId(R.id.ic_badge)
+    val badge: BadgeDrawable = if (reuse != null && reuse is BadgeDrawable) {
+        reuse
+    } else {
+        BadgeDrawable(context)
+    }
+    badge.setCount(count)
+    icon.mutate()
+    icon.setDrawableByLayerId(R.id.ic_badge, badge)
+
+    navView.invalidate()
+
+}
+
+fun setBadgeCount(context: Context, icon: LayerDrawable, count: String, navView: BottomNavigationView) {
     // Reuse drawable if possible
     val reuse: Drawable? = icon.findDrawableByLayerId(R.id.ic_badge)
     val badge: BadgeDrawable = if (reuse != null && reuse is BadgeDrawable) {
