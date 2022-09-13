@@ -3,9 +3,11 @@ package com.el3asas.utils.utils
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.MutableLiveData
 import com.chaos.view.PinView
 import com.el3asas.utils.R
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.regex.Pattern
 
 fun showErrorEditText(editText: TextInputEditText, errorId: Int) {
@@ -56,3 +58,25 @@ fun isPhoneValid(phone: String, length: Int, startKey: String): Boolean {
     return android.util.Patterns.PHONE.matcher(phone)
         .matches() && phone.length == length && phone.startsWith(startKey)
 }
+
+fun <T : Any?> MutableStateFlow<T>.isNotValidValue(
+    vararg notValidConditions: Boolean = booleanArrayOf(
+        this.value == null,
+        when (val value = this.value) {
+            is Int -> value == 0
+            is String -> value.isEmpty()
+            else -> value.toString() == "null"
+        }
+    )
+) = notValidConditions.all { it }
+
+fun <T : Any?> MutableLiveData<T>.isNotValidValue(
+    vararg notValidConditions: Boolean = booleanArrayOf(
+        this.value == null,
+        when (val value = this.value) {
+            is Int -> value == 0
+            is String -> value.isEmpty()
+            else -> value.toString() == "null"
+        }
+    )
+) = notValidConditions.all { it }

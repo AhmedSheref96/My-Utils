@@ -1,13 +1,17 @@
 package com.el3asas.utils.utils
 
+import android.graphics.Color
+import android.graphics.Paint.Cap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
+import coil.size.Scale
 
 const val CENTER_CROP = 0
 const val CENTER_FIT = 1
@@ -38,13 +42,13 @@ fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
 }
 
 fun bindImgWithPlaceHolder(
-    v: ImageView,
+    imageView: ImageView,
     url: String,
     drawable: Drawable? = null,
-    position: Int? = null,
-    onSuccessLoading: ((Boolean, Drawable?) -> Unit)? = null
+    position: Int? = null
 ) {
-    try {
+/*
+ try {
         Glide.with(v.context)
             .asGif()
             .load(drawable)
@@ -87,4 +91,33 @@ fun bindImgWithPlaceHolder(
         }
     } catch (e: Exception) {
     }
+    */
+
+    val circularProgressDrawable = CircularProgressDrawable(imageView.context)
+    circularProgressDrawable.strokeWidth = 10f
+    circularProgressDrawable.centerRadius = 60f
+    circularProgressDrawable.strokeCap = Cap.ROUND
+    circularProgressDrawable.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN)
+    circularProgressDrawable.start()
+    imageView.load(url,
+        imageLoader = ImageLoader.Builder(imageView.context)
+            .addLastModifiedToFileCacheKey(false)
+            .components {
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build(),
+        builder = {
+            crossfade(true)
+            placeholder(circularProgressDrawable)
+            when (position) {
+                CENTER_CROP -> scale(Scale.FILL)
+                CENTER_INSIDE, CENTER_FIT -> scale(Scale.FIT)
+            }
+            error(drawable)
+        })
+
 }

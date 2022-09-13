@@ -4,16 +4,27 @@ import android.os.Bundle
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
+import androidx.databinding.DataBindingUtil
+import com.el3asas.sample.databinding.ActivityMainBinding
 import com.el3asas.utils.utils.customSnackBar
+import com.el3asas.utils.utils.notValidEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        binding.apply {
+            lifecycleOwner = this@MainActivity
+            executePendingBindings()
+        }
 
         val button = findViewById<Button>(R.id.btn)
 
+        val editText = findViewById<TextInputLayout>(R.id.editLayout)
         button.setOnClickListener {
             /*
             * ensure that override of resources
@@ -21,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             * primaryColor defined in app is red
             * */
             customSnackBar(it, "", com.el3asas.utils.R.drawable.ic_outline_error_outline_24) {}
+            editText.notValidEditText("معلش", editText.isEmpty(), true, true, true)
         }
 
         val adapter = CustomAdapter(
@@ -32,10 +44,10 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val menu = findViewById<TextInputLayout>(R.id.menu).editText as? AutoCompleteTextView
-        menu?.setAdapter(adapter)
+        val menu = findViewById<TextInputLayout>(R.id.menu)
+        val autoCompleteTextView = menu.editText as? AutoCompleteTextView
 
-        menu?.setOnItemClickListener { _, _, i, l ->
+        autoCompleteTextView?.setOnItemClickListener { _, _, i, l ->
 
         }
 

@@ -71,6 +71,9 @@ class BadgeDrawable(context: Context) : Drawable() {
         // do nothing
     }
 
+    @Deprecated("Deprecated in Java",
+        ReplaceWith("PixelFormat.UNKNOWN", "android.graphics.PixelFormat")
+    )
     override fun getOpacity(): Int {
         return PixelFormat.UNKNOWN
     }
