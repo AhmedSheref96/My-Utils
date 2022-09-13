@@ -56,7 +56,7 @@ fun bindImgWithPlaceHolder(
     url: String,
     drawable: Drawable? = null,
     @DrawableRes loadingGifRes: Int,
-    onSuccess: (() -> Unit)? = {}
+    onSuccess: ((Drawable) -> Unit)? = {}
 ) {
     val gif = GifDrawable(imageView.context.resources, loadingGifRes)
     imageView.load(
@@ -74,7 +74,7 @@ fun bindImgWithPlaceHolder(
                 override fun onSuccess(request: ImageRequest, result: SuccessResult) {
                     super.onSuccess(request, result)
                     if (onSuccess != null) {
-                        onSuccess()
+                        onSuccess(result.drawable)
                     }
                 }
             })
