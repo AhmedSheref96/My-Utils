@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         applicationContext.imageLoader.memoryCache?.clear()
