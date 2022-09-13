@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import androidx.databinding.DataBindingUtil
+import coil.imageLoader
 import com.el3asas.sample.databinding.ActivityMainBinding
 import com.el3asas.utils.utils.customSnackBar
 import com.el3asas.utils.utils.notValidEditText
@@ -51,5 +52,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        applicationContext.imageLoader.memoryCache?.clear()
     }
 }

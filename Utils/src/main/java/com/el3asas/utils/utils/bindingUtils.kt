@@ -10,7 +10,6 @@ import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
-import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import pl.droidsonroids.gif.GifDrawable
@@ -82,8 +81,6 @@ fun bindImgWithPlaceHolder(
     imageView.load(
         url,
         imageLoader = ImageLoader.Builder(imageView.context)
-            .diskCachePolicy(CachePolicy.DISABLED)
-            .memoryCachePolicy(CachePolicy.ENABLED)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
