@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         autoCompleteTextView?.setOnItemClickListener { _, _, i, l ->
 
         }
-
     }
 
     override fun onDestroy() {
