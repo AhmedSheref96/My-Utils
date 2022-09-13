@@ -5,11 +5,14 @@ import android.os.Build
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import coil.EventListener
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
 import coil.request.CachePolicy
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.el3asas.utils.R
 import pl.droidsonroids.gif.GifDrawable
 
@@ -41,12 +44,19 @@ fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
     }
 }
 
-@BindingAdapter("app:bindImg", "app:placeHolder", "app:loadingGifRes")
+@BindingAdapter(
+    "app:bindImg",
+    "app:placeHolder",
+    "app:loadingGifRes",
+    "app:onSuccessLoadingImage",
+    requireAll = false
+)
 fun bindImgWithPlaceHolder(
     imageView: ImageView,
     url: String,
     drawable: Drawable? = null,
-    @DrawableRes loadingGifRes: Int
+    @DrawableRes loadingGifRes: Int,
+    onSuccess: (() -> Unit)? = {}
 ) {
     val gif = GifDrawable(imageView.context.resources, loadingGifRes)
     imageView.load(
@@ -60,7 +70,14 @@ fun bindImgWithPlaceHolder(
                 } else {
                     add(GifDecoder.Factory())
                 }
-            }
+            }.eventListener(object : EventListener {
+                override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                    super.onSuccess(request, result)
+                    if (onSuccess != null) {
+                        onSuccess()
+                    }
+                }
+            })
             .build(),
         builder = {
             crossfade(true)
