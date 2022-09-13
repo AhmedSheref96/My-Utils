@@ -22,6 +22,7 @@ const val CENTER_INSIDE = 2
 
 @BindingAdapter("app:bindImgCenterCrop", "app:placeHolder")
 fun bindImgCenterCrop(v: ImageView, url: String, drawable: Drawable) {
+    v.scaleType = ImageView.ScaleType.CENTER_CROP
     try {
         bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
     } catch (e: Exception) {
@@ -30,6 +31,7 @@ fun bindImgCenterCrop(v: ImageView, url: String, drawable: Drawable) {
 
 @BindingAdapter("app:bindImgFitCenter", "app:placeHolder")
 fun bindImgFitCenter(v: ImageView, url: String, drawable: Drawable) {
+    v.scaleType = ImageView.ScaleType.FIT_CENTER
     try {
         bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
     } catch (e: Exception) {
@@ -38,6 +40,7 @@ fun bindImgFitCenter(v: ImageView, url: String, drawable: Drawable) {
 
 @BindingAdapter("app:bindImgCenterInside", "app:placeHolder")
 fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
+    v.scaleType = ImageView.ScaleType.CENTER_INSIDE
     try {
         bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
     } catch (e: Exception) {
@@ -63,7 +66,7 @@ fun bindImgWithPlaceHolder(
         url,
         imageLoader = ImageLoader.Builder(imageView.context)
             .diskCachePolicy(CachePolicy.DISABLED)
-            .memoryCachePolicy(CachePolicy.DISABLED)
+            .memoryCachePolicy(CachePolicy.ENABLED)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
