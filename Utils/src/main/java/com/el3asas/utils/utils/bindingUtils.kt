@@ -69,7 +69,6 @@ fun bindImgCenterInside(
     "app:onSuccessLoadingImage",
     requireAll = false
 )
-
 fun bindImgWithPlaceHolder(
     imageView: ImageView,
     url: String,
@@ -98,7 +97,7 @@ fun bindImgWithPlaceHolder(
             .build(),
         builder = {
             crossfade(true)
-            placeholder(gif)
+            placeholder(gif ?: drawable)
             error(drawable)
         },
     )
