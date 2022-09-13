@@ -13,36 +13,52 @@ import coil.load
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.el3asas.utils.R
 import pl.droidsonroids.gif.GifDrawable
 
-const val CENTER_CROP = 0
-const val CENTER_FIT = 1
-const val CENTER_INSIDE = 2
-
-@BindingAdapter("app:bindImgCenterCrop", "app:placeHolder")
-fun bindImgCenterCrop(v: ImageView, url: String, drawable: Drawable) {
+@BindingAdapter(
+    "app:bindImgCenterCrop", "app:placeHolder", "app:loadingGifRes",
+    "app:onSuccessLoadingImage", requireAll = false
+)
+fun bindImgCenterCrop(
+    v: ImageView, url: String, drawable: Drawable,
+    @DrawableRes loadingGifRes: Int?,
+    onSuccess: ((Drawable) -> Unit)? = {}
+) {
     v.scaleType = ImageView.ScaleType.CENTER_CROP
     try {
-        bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
     }
 }
 
-@BindingAdapter("app:bindImgFitCenter", "app:placeHolder")
-fun bindImgFitCenter(v: ImageView, url: String, drawable: Drawable) {
+@BindingAdapter(
+    "app:bindImgFitCenter", "app:placeHolder", "app:loadingGifRes",
+    "app:onSuccessLoadingImage", requireAll = false
+)
+fun bindImgFitCenter(
+    v: ImageView, url: String, drawable: Drawable,
+    @DrawableRes loadingGifRes: Int?,
+    onSuccess: ((Drawable) -> Unit)? = {}
+) {
     v.scaleType = ImageView.ScaleType.FIT_CENTER
     try {
-        bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
     }
 }
 
-@BindingAdapter("app:bindImgCenterInside", "app:placeHolder")
-fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
+@BindingAdapter(
+    "app:bindImgCenterInside", "app:placeHolder", "app:loadingGifRes",
+    "app:onSuccessLoadingImage", requireAll = false
+)
+fun bindImgCenterInside(
+    v: ImageView, url: String, drawable: Drawable,
+    @DrawableRes loadingGifRes: Int?,
+    onSuccess: ((Drawable) -> Unit)? = {}
+) {
     v.scaleType = ImageView.ScaleType.CENTER_INSIDE
     try {
-        bindImgWithPlaceHolder(v, url, drawable, R.drawable.loading_gif)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
     }
 }
@@ -54,14 +70,15 @@ fun bindImgCenterInside(v: ImageView, url: String, drawable: Drawable) {
     "app:onSuccessLoadingImage",
     requireAll = false
 )
+
 fun bindImgWithPlaceHolder(
     imageView: ImageView,
     url: String,
     drawable: Drawable? = null,
-    @DrawableRes loadingGifRes: Int,
+    @DrawableRes loadingGifRes: Int?,
     onSuccess: ((Drawable) -> Unit)? = {}
 ) {
-    val gif = GifDrawable(imageView.context.resources, loadingGifRes)
+    val gif = loadingGifRes?.let { GifDrawable(imageView.context.resources, it) }
     imageView.load(
         url,
         imageLoader = ImageLoader.Builder(imageView.context)
