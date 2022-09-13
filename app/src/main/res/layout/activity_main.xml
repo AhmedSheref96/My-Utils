@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
+    <data>
+
+        <import type="com.el3asas.utils.R" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -50,8 +56,9 @@
             android:id="@+id/imageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            app:bindImgCenterCrop='@{"https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg"}'
             app:placeHolder='@{@drawable/logo}'
+            app:bindImg='@{"https://cdn.pixabay.com/photo/2013/04/03/12/05/tree-99852_960_720.jpg"}'
+            app:loadingGifRes="@{R.drawable.loading_gif}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn" />

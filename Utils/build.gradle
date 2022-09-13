@@ -147,4 +147,8 @@ dependencies {
     implementation "io.coil-kt:coil"
     implementation "io.coil-kt:coil-gif"
     implementation "io.coil-kt:coil-svg"
+
+    //gif as drawable
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
+
 }
