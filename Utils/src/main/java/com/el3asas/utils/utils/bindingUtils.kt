@@ -19,7 +19,7 @@ import pl.droidsonroids.gif.GifDrawable
     "app:onSuccessLoadingImage", requireAll = false
 )
 fun bindImgCenterCrop(
-    v: ImageView, url: String, drawable: Drawable,
+    v: ImageView, url: String, drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
     onSuccess: ((Drawable) -> Unit)? = null
 ) {
@@ -38,7 +38,7 @@ fun bindImgCenterCrop(
     "app:onSuccessLoadingImage", requireAll = false
 )
 fun bindImgFitCenter(
-    v: ImageView, url: String, drawable: Drawable,
+    v: ImageView, url: String, drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
     onSuccess: ((Drawable) -> Unit)? = null
 ) {
@@ -57,7 +57,7 @@ fun bindImgFitCenter(
     "app:onSuccessLoadingImage", requireAll = false
 )
 fun bindImgCenterInside(
-    v: ImageView, url: String, drawable: Drawable,
+    v: ImageView, url: String, drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
     onSuccess: ((Drawable) -> Unit)? = null
 ) {
