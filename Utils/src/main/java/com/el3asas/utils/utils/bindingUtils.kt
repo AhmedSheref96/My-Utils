@@ -20,10 +20,13 @@ import pl.droidsonroids.gif.GifDrawable
 )
 fun bindImgCenterCrop(
     v: ImageView, url: String, drawable: Drawable,
-    @DrawableRes loadingGifRes: Int?,
-    onSuccess: ((Drawable) -> Unit)? = {}
+    @DrawableRes loadingGifRes: Int? = null,
+    onSuccess: ((Drawable) -> Unit)? = null
 ) {
-    v.scaleType = ImageView.ScaleType.CENTER_CROP
+    try {
+        v.scaleType = ImageView.ScaleType.CENTER_CROP
+    } catch (e: Exception) {
+    }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
@@ -36,10 +39,13 @@ fun bindImgCenterCrop(
 )
 fun bindImgFitCenter(
     v: ImageView, url: String, drawable: Drawable,
-    @DrawableRes loadingGifRes: Int?,
-    onSuccess: ((Drawable) -> Unit)? = {}
+    @DrawableRes loadingGifRes: Int? = null,
+    onSuccess: ((Drawable) -> Unit)? = null
 ) {
-    v.scaleType = ImageView.ScaleType.FIT_CENTER
+    try {
+        v.scaleType = ImageView.ScaleType.FIT_CENTER
+    } catch (e: Exception) {
+    }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
@@ -52,10 +58,13 @@ fun bindImgFitCenter(
 )
 fun bindImgCenterInside(
     v: ImageView, url: String, drawable: Drawable,
-    @DrawableRes loadingGifRes: Int?,
-    onSuccess: ((Drawable) -> Unit)? = {}
+    @DrawableRes loadingGifRes: Int? = null,
+    onSuccess: ((Drawable) -> Unit)? = null
 ) {
-    v.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    try {
+        v.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    } catch (e: Exception) {
+    }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
     } catch (e: Exception) {
@@ -73,13 +82,14 @@ fun bindImgWithPlaceHolder(
     imageView: ImageView,
     url: String,
     drawable: Drawable? = null,
-    @DrawableRes loadingGifRes: Int?,
-    onSuccess: ((Drawable) -> Unit)? = {}
+    @DrawableRes loadingGifRes: Int? = null,
+    onSuccess: ((Drawable) -> Unit)? = null
 ) {
     val gif = loadingGifRes?.let { GifDrawable(imageView.context.resources, it) }
     imageView.load(
         url,
         imageLoader = ImageLoader.Builder(imageView.context)
+            .allowHardware(false)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
