@@ -6,11 +6,13 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import coil.imageLoader
 import com.el3asas.sample.databinding.ActivityMainBinding
-import com.el3asas.utils.utils.customSnackBar
-import com.el3asas.utils.utils.notValidEditText
+import com.el3asas.utils.utils.*
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +41,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = CustomAdapter(
             this, R.layout.menu, mutableListOf(
                 Item(
-                    "aaaa",
-                    R.drawable.ic_baseline_search_24, false
+                    "aaaa", R.drawable.ic_baseline_search_24, false
                 )
             )
         )
@@ -51,7 +52,20 @@ class MainActivity : AppCompatActivity() {
         autoCompleteTextView?.setOnItemClickListener { _, _, i, l ->
 
         }
+
+
+        lifecycleScope.launch {
+            getManyData(
+                {
+                    safeCalls({ Response.Success("") })
+                },
+                onSuccess = {}, onError = {},
+            )
+        }
+
+
     }
+
     override fun onDestroy() {
         super.onDestroy()
         applicationContext.imageLoader.memoryCache?.clear()

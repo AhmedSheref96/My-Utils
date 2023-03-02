@@ -35,7 +35,6 @@ fun <T> getData(
     when (value) {
         is Response.Success -> {
             isLoading?.value = false
-
             value.data?.let { onSuccess?.let { it1 -> it1(it) } }
         }
         is Response.Error -> {
@@ -45,5 +44,42 @@ fun <T> getData(
         else -> {
             isLoading?.value = true
         }
+    }
+}
+
+suspend fun <T> getData(
+    dataResource: suspend () -> Response<T>,
+    onSuccess: ((T) -> Unit)? = null,
+    onError: ((String) -> Unit)? = null,
+    vararg isLoading: MutableStateFlow<Boolean>?
+) {
+    isLoading.forEach { it?.value = true }
+    when (val value = dataResource()) {
+        is Response.Success -> {
+            isLoading.forEach { it?.value = false }
+            value.data?.let { onSuccess?.let { it1 -> it1(it) } }
+        }
+        is Response.Error -> {
+            isLoading.forEach { it?.value = false }
+            value.message?.let { onError?.let { it1 -> it1(it) } }
+        }
+        else -> {
+            isLoading.forEach { it?.value = true }
+        }
+    }
+}
+
+suspend fun <T> getManyData(
+    dataResource: suspend () -> List<Response<T>>,
+    onSuccess: ((T) -> Unit)? = null,
+    onError: ((String) -> Unit)? = null,
+    vararg isLoading: MutableStateFlow<Boolean>?
+) {
+    isLoading.forEach { it?.value = true }
+    val value = dataResource()
+    value.forEach {
+        getData(
+            dataResource = { it }, onError = onError, onSuccess = onSuccess, isLoading = isLoading,
+        )
     }
 }
