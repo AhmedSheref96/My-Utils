@@ -15,58 +15,79 @@ import coil.request.SuccessResult
 import pl.droidsonroids.gif.GifDrawable
 
 @BindingAdapter(
-    "app:bindImgCenterCrop", "app:placeHolder", "app:loadingGifRes",
-    "app:onSuccessLoadingImage", requireAll = false
+    "app:bindImgCenterCrop",
+    "app:placeHolder",
+    "app:loadingGifRes",
+    "app:onSuccessLoadingImage",
+    "app:allowHardware",
+    requireAll = false
 )
 fun bindImgCenterCrop(
-    v: ImageView, url: String, drawable: Drawable?,
+    v: ImageView,
+    url: String,
+    drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
-    onSuccess: ((Drawable) -> Unit)? = null
+    onSuccess: ((Drawable) -> Unit)? = null,
+    allowHardware: Boolean = true,
 ) {
     try {
         v.scaleType = ImageView.ScaleType.CENTER_CROP
     } catch (e: Exception) {
     }
     try {
-        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, allowHardware)
     } catch (e: Exception) {
     }
 }
 
 @BindingAdapter(
-    "app:bindImgFitCenter", "app:placeHolder", "app:loadingGifRes",
-    "app:onSuccessLoadingImage", requireAll = false
+    "app:bindImgFitCenter",
+    "app:placeHolder",
+    "app:loadingGifRes",
+    "app:onSuccessLoadingImage",
+    "app:allowHardware",
+    requireAll = false
 )
 fun bindImgFitCenter(
-    v: ImageView, url: String, drawable: Drawable?,
+    v: ImageView,
+    url: String,
+    drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
-    onSuccess: ((Drawable) -> Unit)? = null
+    onSuccess: ((Drawable) -> Unit)? = null,
+    allowHardware: Boolean = true,
 ) {
     try {
         v.scaleType = ImageView.ScaleType.FIT_CENTER
     } catch (e: Exception) {
     }
     try {
-        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, allowHardware)
     } catch (e: Exception) {
     }
 }
 
 @BindingAdapter(
-    "app:bindImgCenterInside", "app:placeHolder", "app:loadingGifRes",
-    "app:onSuccessLoadingImage", requireAll = false
+    "app:bindImgCenterInside",
+    "app:placeHolder",
+    "app:loadingGifRes",
+    "app:onSuccessLoadingImage",
+    "app:allowHardware",
+    requireAll = false
 )
 fun bindImgCenterInside(
-    v: ImageView, url: String, drawable: Drawable?,
+    v: ImageView,
+    url: String,
+    drawable: Drawable?,
     @DrawableRes loadingGifRes: Int? = null,
-    onSuccess: ((Drawable) -> Unit)? = null
+    onSuccess: ((Drawable) -> Unit)? = null,
+    allowHardware: Boolean = true,
 ) {
     try {
         v.scaleType = ImageView.ScaleType.CENTER_INSIDE
     } catch (e: Exception) {
     }
     try {
-        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, allowHardware)
     } catch (e: Exception) {
     }
 }
@@ -76,6 +97,7 @@ fun bindImgCenterInside(
     "app:placeHolder",
     "app:loadingGifRes",
     "app:onSuccessLoadingImage",
+    "app:allowHardware",
     requireAll = false
 )
 fun bindImgWithPlaceHolder(
@@ -83,13 +105,13 @@ fun bindImgWithPlaceHolder(
     url: String,
     drawable: Drawable? = null,
     @DrawableRes loadingGifRes: Int? = null,
-    onSuccess: ((Drawable) -> Unit)? = null
+    onSuccess: ((Drawable) -> Unit)? = null,
+    allowHardware: Boolean = true,
 ) {
     val gif = loadingGifRes?.let { GifDrawable(imageView.context.resources, it) }
     imageView.load(
         url,
-        imageLoader = ImageLoader.Builder(imageView.context)
-            .allowHardware(false)
+        imageLoader = ImageLoader.Builder(imageView.context).allowHardware(allowHardware)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
@@ -103,15 +125,13 @@ fun bindImgWithPlaceHolder(
                         onSuccess(result.drawable)
                     }
                 }
-            })
-            .build(),
+            }).build(),
         builder = {
             crossfade(true)
             placeholder(gif ?: drawable)
             error(drawable)
         },
     )
-
 }
 
 
