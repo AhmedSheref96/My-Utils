@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             getManyData(
                 listOf { safeCall { Response.Success("0") } },
-                onSuccess = listOf(), onError = {},
+                onSuccess = null, onError = null,
             )
         }
 
