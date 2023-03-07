@@ -69,22 +69,18 @@ suspend fun <T> getData(
     }
 }
 
-suspend fun getManyData(
-    dataResource: List<suspend () -> Response<Any>>,
-    onSuccess: List<(Any) -> Unit?>? = null,
-    onError: List<(Any) -> Unit?>? = null,
+suspend fun <T : Any> getManyData(
+    dataResource: List<suspend () -> Response<T>>,
+    onSuccess: Map<Int, ((T) -> Unit)?>? = null,
+    onError: Map<Int, ((String) -> Unit)?>? = null,
     vararg isLoading: MutableStateFlow<Boolean>?
 ) {
     isLoading.forEach { it?.value = true }
     dataResource.forEachIndexed { index, item ->
         getData(
             dataResource = item,
-            onError = {
-                if (onError != null && onError.size > index) onError[index]
-            },
-            onSuccess = {
-                if (onSuccess != null && onSuccess.size > index) onSuccess[index]
-            },
+            onError = onError?.get(index),
+            onSuccess = onSuccess?.get(index),
             isLoading = isLoading,
         )
     }

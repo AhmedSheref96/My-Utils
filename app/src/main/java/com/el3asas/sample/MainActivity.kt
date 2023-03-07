@@ -59,8 +59,14 @@ class MainActivity : AppCompatActivity() {
                 listOf { safeCall { Response.Success("0") } },
                 onSuccess = null, onError = null,
             )
-        }
 
+            getData(
+                {
+                    safeCall { Response.Success("") }
+                },
+                onSuccess = {}, onError = {},
+            )
+        }
 
     }
 
