@@ -21,14 +21,14 @@ fun showToast(
 
     view?.setBackgroundColor(ContextCompat.getColor(context, R.color.primaryColor))
 
-    val text = view?.findViewById(android.R.id.message) as TextView
+    val text = view?.findViewById(android.R.id.message) as TextView?
 
-    text.setTextColor(Color.WHITE)
-    text.setCompoundDrawablesWithIntrinsicBounds(iconId, 0, 0, 0)
+    text?.setTextColor(Color.WHITE)
+    text?.setCompoundDrawablesWithIntrinsicBounds(iconId, 0, 0, 0)
 
-    text.gravity = Gravity.CENTER
+    text?.gravity = Gravity.CENTER
 
-    text.compoundDrawablePadding = 12
+    text?.compoundDrawablePadding = 12
 
     toast.setGravity(gravity, 0, 0)
     toast.show()

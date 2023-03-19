@@ -67,7 +67,7 @@ fun bindImgFitCenter(
     } catch (e: Exception) {
     }
     try {
-        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale,allowHardware)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale, allowHardware)
     } catch (e: Exception) {
     }
 }
@@ -95,7 +95,7 @@ fun bindImgCenterInside(
     } catch (e: Exception) {
     }
     try {
-        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess,scale, allowHardware)
+        bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale, allowHardware)
     } catch (e: Exception) {
     }
 }
@@ -121,9 +121,7 @@ fun bindImgWithPlaceHolder(
     val gif = loadingGifRes?.let { GifDrawable(imageView.context.resources, it) }
     imageView.load(
         url,
-        imageLoader = ImageLoader
-            .Builder(imageView.context)
-            .allowHardware(allowHardware ?: true)
+        imageLoader = ImageLoader.Builder(imageView.context).allowHardware(allowHardware ?: true)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
