@@ -123,6 +123,7 @@ fun bindImgWithPlaceHolder(
         url,
         imageLoader = ImageLoader.Builder(imageView.context).allowHardware(allowHardware ?: true)
             .components {
+
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
                 } else {
