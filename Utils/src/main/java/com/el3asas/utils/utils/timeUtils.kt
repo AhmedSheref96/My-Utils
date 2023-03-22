@@ -31,18 +31,6 @@ class Formatter {
 
 }
 
-@SuppressLint("SimpleDateFormat")
-fun String.changeFormat(
-    fromFormat: String,
-    toFormat: String,
-    lang: String = Locale.ENGLISH.language
-): String {
-    val to = SimpleDateFormat(toFormat, Locale(lang))
-    val from = SimpleDateFormat(fromFormat, Locale(lang))
-    val date: Date? = from.parse(this)
-    return date?.let { to.format(it) } ?: "Time Not Format"
-}
-
 fun Calendar.formatTime(timeFormat: String, lang: String = Locale.ENGLISH.language): String {
     val formatter = SimpleDateFormat(timeFormat, Locale(lang))
     return formatter.format(this.time)
@@ -77,4 +65,31 @@ fun Long.getTimer(): String {
         if (min > 0) min else -min,
         second
     )
+}
+
+
+fun formatTime(
+    time: String,
+    fromFormat: String,
+    toFormat: String,
+    lang: String = Locale.getDefault().language
+) = time.changeFormat(fromFormat, toFormat, lang)
+
+@SuppressLint("SimpleDateFormat")
+fun String.changeFormat(
+    fromFormat: String,
+    toFormat: String,
+    lang: String = Locale.getDefault().language
+): String {
+    val to = SimpleDateFormat(toFormat, Locale(lang))
+    val from = SimpleDateFormat(fromFormat, Locale(lang))
+    val date: Date? = from.parse(this)
+    return date?.let { to.format(it) } ?: "Time Not Format"
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String.stringToDate(
+    fromFormat: SimpleDateFormat,
+): Date? {
+    return fromFormat.parse(this)
 }
