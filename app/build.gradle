@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.el3asas.sample"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -33,6 +33,7 @@ android {
     buildFeatures {
         dataBinding true
     }
+    namespace 'com.el3asas.sample'
 }
 
 dependencies {
