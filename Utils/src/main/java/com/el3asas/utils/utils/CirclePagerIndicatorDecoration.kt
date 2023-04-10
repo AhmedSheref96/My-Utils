@@ -20,7 +20,8 @@ class CirclePagerIndicatorDecoration(
     activeColor: Int,
     inActiveColor: Int,
     itemMarginFromRecyclerView: Int = (DP * 16).toInt()
-) : ItemDecoration() {
+) :
+    ItemDecoration() {
     private val colorActive = activeColor
     private val colorInactive = inActiveColor
 

@@ -1,6 +1,7 @@
 package com.el3asas.utils
 
 import android.app.Application
+import com.el3asas.utils.utils.backHandlerAsHomeBtn
 import timber.log.Timber
 
 class MyApp : Application() {

@@ -35,6 +35,47 @@ fun setAsClickableSpannable(
     textView.movementMethod = LinkMovementMethod.getInstance()
 }
 
+
+@BindingAdapter(
+    "app:spannableText",
+    "app:startIndex1",
+    "app:endIndex1",
+    "app:startIndex2",
+    "app:endIndex2",
+    "app:endIndex2",
+    "app:spannableListener",
+    requireAll = false
+)
+fun setAsClickableSpannable(
+    textView: TextView,
+    text: String,
+    startIndex1: Int,
+    endIndex1: Int,
+    startIndex2: Int? = null,
+    endIndex2: Int? = null,
+    listener: (View) -> Unit,
+) {
+    val ss = SpannableString(text)
+    val clickableSpan: ClickableSpan = object : ClickableSpan() {
+
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.isUnderlineText = false
+        }
+
+        override fun onClick(p0: View) {
+            listener(p0)
+        }
+    }
+
+    ss.setSpan(clickableSpan, startIndex1, endIndex1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    if (startIndex2 != null && endIndex2 != null) {
+        ss.setSpan(clickableSpan, startIndex2, endIndex2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+    textView.text = ss
+    textView.movementMethod = LinkMovementMethod.getInstance()
+}
+
 @BindingAdapter(
     "app:addReadMoreToTextView",
     "app:addMax",

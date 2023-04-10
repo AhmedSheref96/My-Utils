@@ -16,7 +16,6 @@ fun loadActivity(context: Context, cls: Class<*>) {
     val act = ContextUtils.getActivity(context)
     act?.finish()
 }
-
 fun setLocale(activity: Activity, lang: String) {
     val myLocale = Locale(lang)
     Locale.setDefault(myLocale)
