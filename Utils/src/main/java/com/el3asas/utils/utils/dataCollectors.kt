@@ -28,7 +28,7 @@ class DataCollector<T>(
 fun <T> getData(
     value: Response<T>,
     onSuccess: ((T) -> Unit)? = null,
-    onError: ((String) -> Unit)? = null,
+    onError: ((String,T?) -> Unit)? = null,
     isLoading: MutableStateFlow<Boolean>? = null
 ) {
     isLoading?.value = true
@@ -39,7 +39,7 @@ fun <T> getData(
         }
         is Response.Error -> {
             isLoading?.value = false
-            value.message?.let { onError?.let { it1 -> it1(it) } }
+            value.message?.let { onError?.let { it1 -> it1(it,value.data) } }
         }
         else -> {
             isLoading?.value = true
@@ -50,7 +50,7 @@ fun <T> getData(
 suspend fun <T> getData(
     dataResource: suspend () -> Response<T>,
     onSuccess: ((T) -> Unit)? = null,
-    onError: ((String) -> Unit)? = null,
+    onError: ((String, T?) -> Unit)? = null,
     vararg isLoading: MutableStateFlow<Boolean>?
 ) {
     isLoading.forEach { it?.value = true }
@@ -61,7 +61,7 @@ suspend fun <T> getData(
         }
         is Response.Error -> {
             isLoading.forEach { it?.value = false }
-            value.message?.let { onError?.let { it1 -> it1(it) } }
+            value.message?.let { onError?.let { it1 -> it1(it, value.data) } }
         }
         else -> {
             isLoading.forEach { it?.value = true }
@@ -72,7 +72,7 @@ suspend fun <T> getData(
 suspend fun <T : Any> getManyData(
     dataResource: List<suspend () -> Response<T>>,
     onSuccess: Map<Int, ((T) -> Unit)?>? = null,
-    onError: Map<Int, ((String) -> Unit)?>? = null,
+    onError: Map<Int, ((String, T?) -> Unit)?>? = null,
     vararg isLoading: MutableStateFlow<Boolean>?
 ) {
     isLoading.forEach { it?.value = true }
