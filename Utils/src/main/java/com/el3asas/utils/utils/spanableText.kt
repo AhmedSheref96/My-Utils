@@ -42,7 +42,6 @@ fun setAsClickableSpannable(
     "app:endIndex1",
     "app:startIndex2",
     "app:endIndex2",
-    "app:endIndex2",
     "app:spannableListener",
     requireAll = false
 )
