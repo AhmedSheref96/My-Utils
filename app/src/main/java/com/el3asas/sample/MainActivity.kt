@@ -63,7 +63,10 @@ class MainActivity : AppCompatActivity() {
                 {
                     safeCall { Response.Success("") }
                 },
-                onSuccess = {}, onError = {},
+                onSuccess = {},
+                onError = { s, d ->
+
+                },
             )
         }
 
