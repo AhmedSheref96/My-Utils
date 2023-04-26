@@ -145,15 +145,19 @@ fun <T : Parcelable> NavController.handleResult(
     })
 }
 
-fun <T : Parcelable> NavController.finishWithResult(result: T) {
+fun <T : Parcelable> NavController.finishWithResult(result: T, nameTag: String? = null) {
     val currentDestinationId = currentDestination?.id
     if (currentDestinationId != null) {
-        previousBackStackEntry?.savedStateHandle?.set(resultName(currentDestinationId), result)
+        previousBackStackEntry?.savedStateHandle?.set(
+            resultName(currentDestinationId, nameTag),
+            result
+        )
     }
     popBackStack()
 }
 
-private fun resultName(resultSourceId: Int) = "result-$resultSourceId"
+private fun resultName(resultSourceId: Int, nameTag: String? = null) =
+    "result-$resultSourceId-$nameTag"
 
 private fun <T : Parcelable> handleResultFromChild(
     @IdRes childDestinationId: Int,
