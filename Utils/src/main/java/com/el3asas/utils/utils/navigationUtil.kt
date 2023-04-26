@@ -128,13 +128,14 @@ fun <T : Parcelable> NavController.handleResult(
     lifecycleOwner: LifecycleOwner,
     @IdRes currentDestinationId: Int,
     @IdRes childDestinationId: Int,
+    nameTag: String? = null,
     handler: (T) -> Unit
 ) {
     // `getCurrentBackStackEntry` doesn't work in case of recovery from the process death when dialog is opened.
     val currentEntry = getBackStackEntry(currentDestinationId)
     val observer = LifecycleEventObserver { _, event ->
         if (event == Lifecycle.Event.ON_RESUME) {
-            handleResultFromChild(childDestinationId, currentEntry, handler)
+            handleResultFromChild(childDestinationId, currentEntry, nameTag, handler)
         }
     }
     currentEntry.getLifecycle().addObserver(observer)
@@ -162,9 +163,10 @@ private fun resultName(resultSourceId: Int, nameTag: String? = null) =
 private fun <T : Parcelable> handleResultFromChild(
     @IdRes childDestinationId: Int,
     currentEntry: NavBackStackEntry,
+    nameTag: String? = null,
     handler: (T) -> Unit
 ) {
-    val expectedResultKey = resultName(childDestinationId)
+    val expectedResultKey = resultName(childDestinationId, nameTag)
     if (currentEntry.savedStateHandle.contains(expectedResultKey)) {
         val result = currentEntry.savedStateHandle.get<T>(expectedResultKey)
         handler(result!!)
