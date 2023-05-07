@@ -9,7 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.*
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import timber.log.Timber
@@ -146,7 +151,12 @@ fun <T : Parcelable> NavController.handleResult(
     })
 }
 
-fun <T : Parcelable> NavController.finishWithResult(result: T, nameTag: String? = null) {
+fun <T : Parcelable> NavController.finishWithResult(
+    result: T,
+    nameTag: String? = null,
+    destinationId: Int? = null,
+    isInclusive: Boolean = false,
+) {
     val currentDestinationId = currentDestination?.id
     if (currentDestinationId != null) {
         previousBackStackEntry?.savedStateHandle?.set(
@@ -154,7 +164,11 @@ fun <T : Parcelable> NavController.finishWithResult(result: T, nameTag: String? 
             result
         )
     }
-    popBackStack()
+    if (destinationId != null) {
+        popBackStack(destinationId, isInclusive)
+    } else {
+        popBackStack()
+    }
 }
 
 private fun resultName(resultSourceId: Int, nameTag: String? = null) =
