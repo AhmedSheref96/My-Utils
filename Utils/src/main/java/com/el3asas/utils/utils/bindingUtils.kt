@@ -10,11 +10,11 @@ import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
-import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
 import pl.droidsonroids.gif.GifDrawable
+import timber.log.Timber
 
 @BindingAdapter(
     "app:bindImgCenterCrop",
@@ -37,10 +37,12 @@ fun bindImgCenterCrop(
     try {
         v.scaleType = ImageView.ScaleType.CENTER_CROP
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale, allowHardware)
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
 }
 
@@ -65,10 +67,12 @@ fun bindImgFitCenter(
     try {
         v.scaleType = ImageView.ScaleType.FIT_CENTER
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale, allowHardware)
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
 }
 
@@ -93,10 +97,12 @@ fun bindImgCenterInside(
     try {
         v.scaleType = ImageView.ScaleType.CENTER_INSIDE
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
     try {
         bindImgWithPlaceHolder(v, url, drawable, loadingGifRes, onSuccess, scale, allowHardware)
     } catch (e: Exception) {
+        Timber.d("******* error ${e.message}")
     }
 }
 
@@ -123,7 +129,6 @@ fun bindImgWithPlaceHolder(
         url,
         imageLoader = ImageLoader.Builder(imageView.context).allowHardware(allowHardware ?: true)
             .components {
-
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder.Factory())
                 } else {
