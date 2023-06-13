@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import coil.EventListener
 import coil.ImageLoader
@@ -174,27 +173,18 @@ private fun bindWithCoil(
 @BindingAdapter(
     "app:glide_url",
     "app:glide_placeholder",
-    "app:glide_loading_gif",
     "app:glide_onSuccessLoadingImage",
-    "app:glide_scale",
     "app:glide_skipCache",
     requireAll = false
 )
-private fun bindWithGlide(
+fun bindWithGlide(
     imageView: ImageView,
     url: String,
-    @DrawableRes placeholder: Int? = null,
-    @DrawableRes loadingGifRes: Int? = null,
+    placeHolder: Drawable? = null,
     onSuccess: ((Drawable) -> Unit)? = null,
-    glideScale: Boolean? = null,
     skipCache: Boolean? = false
 ) {
-    val mDrawable = if (loadingGifRes != null) GifDrawable(
-        imageView.context.resources, loadingGifRes
-    ) else if (placeholder != null) ResourcesCompat.getDrawable(
-        imageView.resources, placeholder, null
-    ) else null
-    Glide.with(imageView).load(url).placeholder(mDrawable).skipMemoryCache(skipCache ?: false)
+    Glide.with(imageView).load(url).placeholder(placeHolder).skipMemoryCache(skipCache ?: false)
         .addListener(object : RequestListener<Drawable> {
             override fun onLoadFailed(
                 e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean
