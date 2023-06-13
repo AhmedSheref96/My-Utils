@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notValid">أدخال غير صحيح</string>
+    <string name="seeMore">رؤية المزيد</string>
+    <string name="seeLess">رؤية أقل</string>
+    <string name="maps_key" />
 </resources>
