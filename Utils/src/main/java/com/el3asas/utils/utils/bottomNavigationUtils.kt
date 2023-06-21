@@ -6,7 +6,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-private fun hideBottomNavigationView(
+fun hideBottomNavigationView(
     view: View, fab: FloatingActionButton? = null
 ) {
     view.animate().translationY(view.height.toFloat())
@@ -23,7 +23,7 @@ private fun hideBottomNavigationView(
 
 }
 
-private fun showBottomNavigationView(
+fun showBottomNavigationView(
     view: View, fab: FloatingActionButton? = null
 ) {
     view.animate().translationY(0f).setListener(object : Animator.AnimatorListener {
