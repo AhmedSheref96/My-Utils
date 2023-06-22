@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="grey">#D3C4C3</color>
+    <color name="saved_places_unselected">#FFFFFF</color>
+    <color name="text_color">#4B4B4B</color>
 </resources>
