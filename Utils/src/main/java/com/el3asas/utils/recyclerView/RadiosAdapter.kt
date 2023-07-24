@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.res.ResourcesCompat
@@ -13,7 +14,7 @@ import com.el3asas.utils.binding.RecyclerAdapterBinding
 import com.el3asas.utils.databinding.ItemRadioButtonForRecyclerView2Binding
 
 class RadiosAdapterFilterable<T>(
-    private val funOnSelectedItem: ((Int, RadioItemDataModel<T>) -> Unit)? = null,
+    private val funOnSelectedItem: ((View, Int, RadioItemDataModel<T>) -> Unit)? = null,
     private val backgroundRes: Int? = null,
     private val textColor: Int = R.color.radio_item_text_color,
     private val inVisibleBtn: Boolean = true,
@@ -63,7 +64,7 @@ class RadiosAdapterFilterable<T>(
             radio.isChecked = item.isChecked
             root.setOnClickListener {
                 handleSelectNewItem(position)
-                funOnSelectedItem?.let { it1 -> it1(lastSelectedId, item) }
+                funOnSelectedItem?.let { it1 -> it1(it, lastSelectedId, item) }
             }
         }
     }
